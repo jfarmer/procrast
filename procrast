@@ -67,18 +67,3 @@ case $COMMAND in
   exit 1
   ;;
 esac
-		
-
-#case $1 in
-#'no')
-#	awk '{ r = gensub(/^#([0-9])/, "\\1", "g"); print r; }' /etc/hosts > /etc/hosts.new; mv /etc/hosts.new /etc/hosts
-#	;;
-#'yes')
-#	awk '{ r = gensub(/^66\./, "#66.", "g"); print r; }' /etc/hosts > /etc/hosts.new; mv /etc/hosts.new /etc/hosts
-#	;;
-#*)
-#	echo "Please choose 'yes' or 'no'"
-#	;;
-#esac
-
-
