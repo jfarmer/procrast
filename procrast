@@ -1,7 +1,7 @@
 #!/bin/sh
 
 get_current_ip() {
-	echo $(ifconfig | grep 'inet '| grep -v '127.0.0.1' | cut -d' ' -f2 | awk '{ print $1}')
+  echo $(ifconfig | grep 'inet '| grep -v '127.0.0.1' | cut -d' ' -f2 | awk '{ print $1}')
 }
 
 create_host_line() {
@@ -42,8 +42,8 @@ remove_host() {
 }
 
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-	sudo $0 $*
-	exit
+  sudo $0 $*
+  exit
 fi
 
 COMMAND=$1
