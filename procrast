@@ -1,0 +1,84 @@
+#!/bin/sh
+
+get_current_ip() {
+	echo $(ifconfig | grep 'inet '| grep -v '127.0.0.1' | cut -d' ' -f2 | awk '{ print $1}')
+}
+
+create_host_line() {
+  echo "$1 $2 # procrast"
+}
+
+print_usage() {
+  echo "Usage: [sudo] $(basename $0) [no|yes|add|remove]"
+}
+
+set_procrast_no() {
+  sed -e 's/^#\(.*# procrast\)/\1/g' /etc/hosts > /etc/hosts.new
+  mv /etc/hosts.new /etc/hosts
+}
+
+set_procrast_yes() {
+  sed -e 's/\(^[^\#]*# procrast\)/#\1/g' /etc/hosts > /etc/hosts.new
+  mv /etc/hosts.new /etc/hosts
+}
+
+add_host() {
+  local HOST=$1
+ 
+  if [ "$#" == "1" ];then
+    local IP=`get_current_ip`
+  else
+    local IP=$2
+  fi
+  
+  echo $(create_host_line $IP $HOST) >> /etc/hosts
+}
+
+remove_host() {
+  local HOST=$1
+  
+  sed "s/.*$HOST # procrast//g" /etc/hosts > /etc/hosts.new
+  mv /etc/hosts.new /etc/hosts
+}
+
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+	sudo $0 $*
+	exit
+fi
+
+COMMAND=$1
+shift
+
+case $COMMAND in
+'no')
+  set_procrast_no
+  ;;
+'yes')
+  set_procrast_yes
+  ;;
+'add')
+  add_host $*
+  ;;
+'remove')
+  remove_host $*
+  ;;
+*)
+  print_usage
+  exit 1
+  ;;
+esac
+		
+
+#case $1 in
+#'no')
+#	awk '{ r = gensub(/^#([0-9])/, "\\1", "g"); print r; }' /etc/hosts > /etc/hosts.new; mv /etc/hosts.new /etc/hosts
+#	;;
+#'yes')
+#	awk '{ r = gensub(/^66\./, "#66.", "g"); print r; }' /etc/hosts > /etc/hosts.new; mv /etc/hosts.new /etc/hosts
+#	;;
+#*)
+#	echo "Please choose 'yes' or 'no'"
+#	;;
+#esac
+
+
