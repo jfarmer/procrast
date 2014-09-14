@@ -1,9 +1,5 @@
 #!/bin/sh
 
-get_current_ip() {
-  echo $(ifconfig | grep 'inet '| grep -v '127.0.0.1' | cut -d' ' -f2 | awk '{ print $1}')
-}
-
 create_host_line() {
   echo "$1 $2 # procrast"
 }
@@ -26,7 +22,7 @@ add_host() {
   local HOST=$1
  
   if [ "$#" == "1" ];then
-    local IP=`get_current_ip`
+    local IP=127.0.0.1
   else
     local IP=$2
   fi
