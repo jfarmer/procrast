@@ -9,6 +9,14 @@ This script blocks websites by adding a bogus entry to `/etc/hosts`. You can the
 - Use `procrast no` to **stop** procrastinating
 - Use `procrast yes` to start procrastinating
 
+## Installing
+
+If you have `~/bin` in your `PATH` environment variable, the following will work:
+
+```console
+mkdir -p ~/bin ; curl https://raw.githubusercontent.com/jfarmer/procrast/master/procrast -o ~/bin/procrast && chmod u+x ~/bin/procrast
+```
+
 ## Examples
 
 You probably want to add both `www.site.com` and `site.com`.
